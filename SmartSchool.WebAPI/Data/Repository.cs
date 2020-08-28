@@ -110,7 +110,7 @@ namespace SmartSchool.WebAPI.Data
                 .ThenInclude(p => p.Professor);
             }
 
-            query = query.AsNoTracking().OrderBy(a => a.Id == alunoid);
+            query = query.AsNoTracking().Where(a => a.Id == alunoid);
 
             return query.FirstOrDefault();
         }
