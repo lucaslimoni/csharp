@@ -49,7 +49,7 @@ namespace SmartSchool.WebAPI.Controllers
             if (nome == null) return BadRequest("Nome não pode ser nulo para busca");
             var aluno = _repo.GetAlunosByNome(nome, true);
             if (aluno == null) return BadRequest("Aluno não encontrado");
-            var alunoDto = _mapper.Map<AlunoDto>(aluno);
+            var alunoDto = _mapper.Map<IEnumerable<AlunoDto>>(aluno);
             return Ok(alunoDto);
         }
 
@@ -61,16 +61,16 @@ namespace SmartSchool.WebAPI.Controllers
             if (sobrenome == null) return BadRequest("Sobrenome não pode ser nulo para busca");
             var aluno = _repo.GetAlunosByNomeSobrenome(nome, sobrenome, true);
             if (aluno == null) return BadRequest("Aluno não encontrado");
-            var alunoDto = _mapper.Map<AlunoDto>(aluno);
+            var alunoDto = _mapper.Map<IEnumerable<AlunoDto>>(aluno);
             return Ok(alunoDto);
         }
 
 
         //api/aluno/nome
         [HttpPost]
-        public IActionResult Post(AlunoDto model)
+        public IActionResult Post(AlunoRegistrarDto model)
         {
-            var aluno = _mapper.Map<AlunoDto>(model);
+            var aluno = _mapper.Map<Aluno>(model);
             _repo.Add(aluno);
             if (_repo.SaveChanges())
             {
@@ -81,7 +81,7 @@ namespace SmartSchool.WebAPI.Controllers
 
         //api/aluno/nome
         [HttpPut("{id}")]
-        public IActionResult Put(int id, AlunoDto model)
+        public IActionResult Put(int id, AlunoRegistrarDto model)
         {
             var aluno = _repo.GetAlunoById(id);
             if (aluno == null) return BadRequest("Aluno não encontrado");
@@ -97,7 +97,7 @@ namespace SmartSchool.WebAPI.Controllers
 
         //api/aluno/nome
         [HttpPatch("{id}")]
-        public IActionResult Patch(int id, AlunoDto model)
+        public IActionResult Patch(int id, AlunoRegistrarDto model)
         {
             var aluno = _repo.GetAlunoById(id);
             if (aluno == null) return BadRequest("Aluno não encontrado");
