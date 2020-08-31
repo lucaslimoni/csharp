@@ -9,13 +9,22 @@ using AutoMapper;
 
 namespace SmartSchool.WebAPI.Controllers
 {
+    /// <summary>
+    /// Controllers responsavel pelo Aluno
+    /// </summary>
     [ApiController]
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class AlunoController : ControllerBase
     {
         public readonly IRepository _repo;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repo"></param>
+        /// <param name="mapper"></param>
         public AlunoController(IRepository repo, IMapper mapper)
         {
             _mapper = mapper;
@@ -23,6 +32,10 @@ namespace SmartSchool.WebAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Método responsável por retornar todos os alunos
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Get()
         {
@@ -30,6 +43,12 @@ namespace SmartSchool.WebAPI.Controllers
 
             return Ok(_mapper.Map<IEnumerable<AlunoDto>>(alunos));
         }
+
+        /// <summary>
+        /// Método responsável por retornar apenas um unico Aluno por ID.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
         //api/aluno/id
         [HttpGet("{id}")]
@@ -42,6 +61,13 @@ namespace SmartSchool.WebAPI.Controllers
             return Ok(alunoDto);
         }
 
+
+        /// <summary>
+        /// Método responsável por retornar todos os alunos buscando por letra.
+        /// </summary>
+        /// <param name="nome"></param>
+        /// <returns></returns>
+
         //api/aluno/nome
         [HttpGet("byNome")]
         public IActionResult GetByName(string nome)
@@ -52,6 +78,13 @@ namespace SmartSchool.WebAPI.Controllers
             var alunoDto = _mapper.Map<IEnumerable<AlunoDto>>(aluno);
             return Ok(alunoDto);
         }
+
+        /// <summary>
+        /// Método responsável por retornar um unico aluno buscando por nome e sobrenome.
+        /// </summary>
+        /// <param name="nome"></param>
+        /// <param name="sobrenome"></param>
+        /// <returns></returns>
 
         //api/aluno/nome
         [HttpGet("byNomeSobrenome")]
@@ -65,6 +98,10 @@ namespace SmartSchool.WebAPI.Controllers
             return Ok(alunoDto);
         }
 
+        /// <summary>
+        /// Método responsável por gravar um aluno.
+        /// </summary>
+        /// <returns></returns>
 
         //api/aluno/nome
         [HttpPost]
@@ -78,6 +115,13 @@ namespace SmartSchool.WebAPI.Controllers
             }
             return BadRequest("Aluno não cadastrado");
         }
+
+        /// <summary>
+        /// Método responsável por alterar um aluno por id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
 
         //api/aluno/nome
         [HttpPut("{id}")]
@@ -95,6 +139,13 @@ namespace SmartSchool.WebAPI.Controllers
             return BadRequest("Aluno não atualizado");
         }
 
+        /// <summary>
+        /// Método responsável por alterar um aluno por id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+
         //api/aluno/nome
         [HttpPatch("{id}")]
         public IActionResult Patch(int id, AlunoRegistrarDto model)
@@ -110,6 +161,12 @@ namespace SmartSchool.WebAPI.Controllers
             }
             return BadRequest("Aluno não atualizado");
         }
+
+        /// <summary>
+        /// Método responsável por deletar um aluno por id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
         //api/aluno/nome
         [HttpDelete("{id}")]
